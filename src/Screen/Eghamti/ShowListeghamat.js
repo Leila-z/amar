@@ -40,7 +40,7 @@ export default class showListeghamat extends React.Component {
 								// backgroundColor: "#fff",
 							}}
 							onPress={() => {
-								Navigation.dismissModal(this.props.componentId);
+								Navigation.dismissModal();
 							}}
 						>
 							<Image

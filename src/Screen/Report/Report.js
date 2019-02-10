@@ -16,7 +16,7 @@ import {
 import { TouchableOpacity, Image } from "react-native";
 import EStyleSheet from "react-native-extended-stylesheet";
 import { Navigation } from "react-native-navigation";
-import { goToAuth, sidemenu } from "../../component/bottonTab";
+import { goToAuth } from "../../component/bottonTab";
 import ImageOverlay from "react-native-image-overlay";
 import {
 	responsiveHeight,
@@ -57,7 +57,7 @@ export default class Eghamat extends React.Component {
 								// backgroundColor: "#fff",
 							}}
 							onPress={() => {
-								Navigation.dismissModal(this.props.componentId);
+								Navigation.dismissModal();
 							}}
 						>
 							<Image
@@ -122,21 +122,9 @@ export default class Eghamat extends React.Component {
 								}}
 								onPress={() => {
 									Navigation.showModal({
-										stack: {
-											children: [
-												{
-													component: {
-														name: "Day-report",
-														options: {
-															topBar: {
-																visible: false,
-																animate: false,
-																drawBehind: true,
-															},
-														},
-													},
-												},
-											],
+										screen: "Day-report",
+										navigatorStyle: {
+											navBarHidden: true,
 										},
 									});
 								}}
@@ -176,15 +164,9 @@ export default class Eghamat extends React.Component {
 								}}
 								onPress={() => {
 									Navigation.showModal({
-										component: {
-											name: "reporting",
-											options: {
-												topBar: {
-													visible: false,
-													animate: false,
-													drawBehind: true,
-												},
-											},
+										screen: "reporting",
+										navigatorStyle: {
+											navBarHidden: true,
 										},
 									});
 									// this.setState({

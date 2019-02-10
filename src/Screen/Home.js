@@ -47,7 +47,7 @@ export default class Home extends React.Component {
 	}
 	render() {
 		return (
-			<View style={{ flex: 1 }}>
+			<View style={{ flex: 1, paddingTop: 0 }}>
 				<Header
 					style={{ backgroundColor: "#6275AB" }}
 					androidStatusBarColor="#6275AB"
@@ -64,16 +64,10 @@ export default class Home extends React.Component {
 							}}
 							onPress={() => {
 								// this._VisibleMenu();
-								Navigation.mergeOptions(
-									this.props.componentId,
-									{
-										sideMenu: {
-											right: {
-												visible: this.state.visible,
-											},
-										},
-									}
-								);
+								this.props.navigator.toggleDrawer({
+									side: "right",
+									animated: true,
+								});
 							}}
 						>
 							<Image
@@ -91,26 +85,14 @@ export default class Home extends React.Component {
 								marginTop: 10,
 							}}
 							onPress={() => {
-								Navigation.setRoot({
-									root: {
-										stack: {
-											id: "login",
-											children: [
-												{
-													component: {
-														name: "Login",
-													},
-												},
-											],
-											options: {
-												topBar: {
-													visible: false,
-													animate: false,
-													drawBehind: true,
-												},
-											},
-										},
+								Navigation.startSingleScreenApp({
+									screen: {
+										screen: "Login",
 									},
+									navigatorStyle: {
+										navBarHidden: true,
+									},
+									animationType: "fade",
 								});
 							}}
 						>
@@ -178,15 +160,9 @@ export default class Home extends React.Component {
 									this._VisibleMenu();
 
 									Navigation.showModal({
-										component: {
-											name: "Eghamat",
-											options: {
-												topBar: {
-													visible: false,
-													animate: false,
-													drawBehind: true,
-												},
-											},
+										screen: "Eghamat",
+										navigatorStyle: {
+											navBarHidden: true,
 										},
 									});
 								}}
@@ -222,15 +198,9 @@ export default class Home extends React.Component {
 								}}
 								onPress={() => {
 									Navigation.showModal({
-										component: {
-											name: "recorder",
-											options: {
-												topBar: {
-													visible: false,
-													animate: false,
-													drawBehind: true,
-												},
-											},
+										screen: "recorder",
+										navigatorStyle: {
+											navBarHidden: true,
 										},
 									});
 								}}
@@ -267,15 +237,9 @@ export default class Home extends React.Component {
 								}}
 								onPress={() => {
 									Navigation.showModal({
-										component: {
-											name: "report",
-											options: {
-												topBar: {
-													visible: false,
-													animate: false,
-													drawBehind: true,
-												},
-											},
+										screen: "report",
+										navigatorStyle: {
+											navBarHidden: true,
 										},
 									});
 								}}
@@ -344,26 +308,14 @@ export default class Home extends React.Component {
 	logOut() {
 		AsyncStorage.removeItem("email");
 		AsyncStorage.removeItem("pass");
-		Navigation.setRoot({
-			root: {
-				stack: {
-					id: "login",
-					children: [
-						{
-							component: {
-								name: "Login",
-							},
-						},
-					],
-					options: {
-						topBar: {
-							visible: false,
-							animate: false,
-							drawBehind: true,
-						},
-					},
+		Navigation.startSingleScreenApp({
+			screen: {
+				screen: "Login",
+				navigatorStyle: {
+					navBarHidden: true,
 				},
 			},
+			animationType: "fade",
 		});
 	}
 }

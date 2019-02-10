@@ -639,7 +639,7 @@ export default class sabtEghamat extends React.Component {
 								// backgroundColor: "#fff",
 							}}
 							onPress={() => {
-								Navigation.dismissModal(this.props.componentId);
+								Navigation.dismissModal();
 							}}
 						>
 							<Image

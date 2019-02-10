@@ -8,8 +8,9 @@ import {
 	TextInput,
 	AsyncStorage,
 	BackHandler,
-	PermissionsAndroid
+	PermissionsAndroid,
 } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import {
 	Container,
 	Header,
@@ -24,8 +25,7 @@ import {
 	Icon,
 	Input,
 } from "native-base";
-import { goToAuth, goHome } from "../component/bottonTab";
-import { Navigation } from "react-native-navigation";
+import { goToAuth } from "../component/bottonTab";
 import axios from "axios";
 import {
 	responsiveHeight,
@@ -64,143 +64,165 @@ export default class Login extends React.Component {
 			<View
 				style={{
 					flex: 1,
-					backgroundColor: "#1A4B85",
-					justifyContent: "center",
-					position: "absolute",
-					top: 0,
-					bottom: 0,
-					right: 0,
-					left: 0,
-					paddingTop: 20,
 				}}
 			>
-				<StatusBar backgroundColor="#6275AB" />
-				{/* <Content style={{ backgroundColor: "#000" }}> */}
-				<View
-					style={{
-						alignItems: "center",
+				<KeyboardAwareScrollView
+					style={{ flex: 1, backgroundColor: "#1A4B85" }}
+					contentContainerStyle={{
+						height: "100%",
+						justifyContent: "center",
 					}}
 				>
+					<StatusBar backgroundColor="#6275AB" />
+					{/* <Content style={{ backgroundColor: "#000" }}> */}
+
 					<View
 						style={{
-							justifyContent: "flex-end",
 							alignItems: "center",
-							height: responsiveHeight(30),
-							width: responsiveWidth(50),
-							// backgroundColor: "#000",
 						}}
 					>
-						<Image
-							source={require("../assets/Logo.png")}
-							style={{ width: "100%", height: "100%" }}
-						/>
-					</View>
-
-					<TouchableOpacity
-						activeOpacity={0.8}
-						style={{
-							backgroundColor: "#fff",
-							justifyContent: "flex-end",
-							borderRadius: 5,
-							borderWidth: 2,
-							borderColor: "#d6d7da",
-							right: 2,
-							marginTop: 4,
-						}}
-						onPress={() => {
-							Linking.openURL("http://amarcht.ir");
-						}}
-					>
-						<Text>www.amarcht.ir</Text>
-					</TouchableOpacity>
-				</View>
-				{this.state.error == false ? null : (
-					<Text
-						style={{
-							color: "red",
-							textAlign: "center",
-							fontFamily: "IRANSansMobile",
-							fontSize: responsiveFontSize(1.5),
-							top: 10,
-						}}
-					>
-						نام کاربری یا رمز عبوراشتباه است
-					</Text>
-				)}
-
-				<Form style={login.StyleForm}>
-					<Item rounded style={login.item} error={emailError !== ""}>
-						<TextInput
-							ref={this.Email}
-							placeholder="ایمیل خود را وارد کنید"
-							style={login.input}
-							onChangeText={this.changeEmailInput.bind(this)}
-							onSubmitEditing={() => this.pass.current.focus()}
-							underlineColorAndroid={"transparent"}
-							keyboardType="email-address"
-							returnKeyType="next"
-						/>
-						<Image
-							source={require("../assets/icon/user.png")}
-							style={{ width: 50, height: 50, right: 0 }}
-						/>
-					</Item>
-					<Text style={[login.error, this._checkDisplay(emailError)]}>
-						پر کردن این فیلد الزامی است
-					</Text>
-					<Item
-						rounded
-						style={login.item}
-						error={passwordError !== ""}
-					>
-						<TextInput
-							ref={this.pass}
-							adjustsFontSizeToFit
-							placeholder="پسورد خود را وارد کنید"
-							secureTextEntry
-							style={login.input}
-							onChangeText={this.changePasswordInput.bind(this)}
-							onSubmitEditing={() => this.pass.current.focus()}
-							underlineColorAndroid={"transparent"}
-						/>
-						<Image
-							source={require("../assets/icon/pass.png")}
-							style={{ width: 50, height: 50, right: 0 }}
-						/>
-					</Item>
-					<Text
-						style={[login.error, this._checkDisplay(passwordError)]}
-					>
-						پر کردن این فیلد الزامی است
-					</Text>
-					<View style={{ alignItems: "center" }}>
-						<Button
-							full
-							style={login.submitButton}
-							onPress={() => {
-								// goToAuth();
-								this.Input();
+						<View
+							style={{
+								justifyContent: "flex-end",
+								alignItems: "center",
+								height: responsiveHeight(30),
+								width: responsiveWidth(50),
+								// backgroundColor: "#000",
 							}}
 						>
-							<Text adjustsFontSizeToFit style={login.submitText}>
-								ورود
-							</Text>
-						</Button>
+							<Image
+								source={require("../assets/Logo.png")}
+								style={{ width: "100%", height: "100%" }}
+							/>
+						</View>
+
+						<TouchableOpacity
+							activeOpacity={0.8}
+							style={{
+								backgroundColor: "#fff",
+								justifyContent: "flex-end",
+								borderRadius: 5,
+								borderWidth: 2,
+								borderColor: "#d6d7da",
+								right: 2,
+								marginTop: 4,
+							}}
+							onPress={() => {
+								Linking.openURL("http://amarcht.ir");
+							}}
+						>
+							<Text>www.amarcht.ir</Text>
+						</TouchableOpacity>
 					</View>
-					<TouchableOpacity>
+					{this.state.error == false ? null : (
 						<Text
 							style={{
+								color: "red",
+								textAlign: "center",
 								fontFamily: "IRANSansMobile",
 								fontSize: responsiveFontSize(1.5),
-								color: "#fff",
-								padding: 8,
+								top: 10,
 							}}
 						>
-							حساب کاربری ندارید؟ ثبت نام کنید
+							نام کاربری یا رمز عبوراشتباه است
 						</Text>
-					</TouchableOpacity>
-				</Form>
-				{/* </Content> */}
+					)}
+
+					<Form style={login.StyleForm}>
+						<Item
+							rounded
+							style={login.item}
+							error={emailError !== ""}
+						>
+							<TextInput
+								ref={this.Email}
+								placeholder="ایمیل خود را وارد کنید"
+								style={login.input}
+								onChangeText={this.changeEmailInput.bind(this)}
+								onSubmitEditing={() =>
+									this.pass.current.focus()
+								}
+								underlineColorAndroid={"transparent"}
+								keyboardType="email-address"
+								returnKeyType="next"
+							/>
+							<Image
+								source={require("../assets/icon/user.png")}
+								style={{ width: 50, height: 50, right: 0 }}
+							/>
+						</Item>
+						<Text
+							style={[
+								login.error,
+								this._checkDisplay(emailError),
+							]}
+						>
+							پر کردن این فیلد الزامی است
+						</Text>
+						<Item
+							rounded
+							style={login.item}
+							error={passwordError !== ""}
+						>
+							<TextInput
+								ref={this.pass}
+								adjustsFontSizeToFit
+								placeholder="پسورد خود را وارد کنید"
+								secureTextEntry
+								style={login.input}
+								onChangeText={this.changePasswordInput.bind(
+									this
+								)}
+								onSubmitEditing={() =>
+									this.pass.current.focus()
+								}
+								underlineColorAndroid={"transparent"}
+							/>
+							<Image
+								source={require("../assets/icon/pass.png")}
+								style={{ width: 50, height: 50, right: 0 }}
+							/>
+						</Item>
+						<Text
+							style={[
+								login.error,
+								this._checkDisplay(passwordError),
+							]}
+						>
+							پر کردن این فیلد الزامی است
+						</Text>
+						<View style={{ alignItems: "center" }}>
+							<Button
+								full
+								style={login.submitButton}
+								onPress={() => {
+									// goToAuth();
+									this.Input();
+								}}
+							>
+								<Text
+									adjustsFontSizeToFit
+									style={login.submitText}
+								>
+									ورود
+								</Text>
+							</Button>
+						</View>
+						<TouchableOpacity>
+							<Text
+								style={{
+									fontFamily: "IRANSansMobile",
+									fontSize: responsiveFontSize(1.5),
+									color: "#fff",
+									padding: 8,
+								}}
+							>
+								حساب کاربری ندارید؟ ثبت نام کنید
+							</Text>
+						</TouchableOpacity>
+					</Form>
+					{/* </Content> */}
+				</KeyboardAwareScrollView>
 			</View>
 		);
 	}
@@ -290,28 +312,18 @@ export default class Login extends React.Component {
 
 	async requestCameraPermission() {
 		try {
-		  const granted = await PermissionsAndroid.request(
-			PermissionsAndroid.ACCESS_FINE_LOCATION,
-			{
-			  title: 'Cool Photo App Camera Permission',
-			  message:
-				'Cool Photo App needs access to your camera ' +
-				'so you can take awesome pictures.',
-			  buttonNeutral: 'Ask Me Later',
-			  buttonNegative: 'Cancel',
-			  buttonPositive: 'OK',
-			},
-		  );
-		  if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-			console.log('You can use the camera');
-		  } else {
-			console.log('Camera permission denied');
-		  }
+			const granted = await PermissionsAndroid.request(
+				PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+				{
+					title: "استفاده از مکان شما?",
+					message:
+						"این برنامه برای پیدا کردن مکان شما نیاز به تغییر تنظیمات دارد",
+				}
+			);
 		} catch (err) {
-		  console.warn(err);
+			return false;
 		}
-	  }
-	  
+	}
 }
 
 export const login = StyleSheet.create({

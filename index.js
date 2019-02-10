@@ -6,18 +6,15 @@ registerScreens();
 
 I18nManager.forceRTL(true);
 
-Navigation.events().registerAppLaunchedListener(() => {
-	Navigation.setRoot({
-		root: {
-			component: {
-				// name: "Home",
-				// name: "Eghamat",
-				name: "Login",
-				// name: "report",
-				// name: "new-record",
-				// name: "day",
-				// name: "Screen2",
-			},
+Navigation.startSingleScreenApp({
+	screen: {
+		screen: "Login",
+		navigatorStyle: {
+			navBarHidden: true,
 		},
-	});
+	},
+	appStyle: {
+		orientation: "portrait",
+	},
+	animationType: "fade",
 });
